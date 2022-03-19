@@ -1,0 +1,135 @@
+<p>
+  <mat-toolbar class="mat-toolbar-height">
+    <span>{{'viewer.set_origin'|translate}}</span>
+    <span class="origin-spacer"></span>
+    <button mat-icon-button mat-dialog-close="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+</p>
+
+<form [formGroup]="originForm" class="viewer-form" (change)="formData($event)">
+
+  <mat-grid-list cols="3" rowHeight="275px">
+    <mat-grid-tile cospan="1">
+      <mat-card class="margin-project-img">
+        <img mat-card-image [src]="modelData.mapImage" class="size-project-img">
+
+        <mat-card-actions class="btn-actions">
+          <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+          <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="mapImage">
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+      <table>
+        <tr>
+          <td>
+            <mat-form-field class="north-full-width" appearance="fill">
+              <mat-label>{{'viewer.north'|translate}}</mat-label>
+              <input matInput type="number" formControlName="north" id="north" step="0.00001" appTwoDigitDecimaNumber>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field class="west-full-width" appearance="fill">
+              <mat-label>{{'viewer.west'|translate}}</mat-label>
+              <input matInput type="number" formControlName="west" id="west" step="0.00001" >
+            </mat-form-field>
+          </td>
+
+          <td>
+            <mat-form-field class="east-full-width" appearance="fill">
+              <mat-label>{{'viewer.east'|translate}}</mat-label>
+              <input matInput type="number" formControlName="east" id="east" step="0.00001" >
+            </mat-form-field>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <mat-form-field class="south-full-width" appearance="fill">
+              <mat-label>{{'viewer.south'|translate}}</mat-label>
+              <input matInput type="number" formControlName="south" id="south" step="0.00001" >
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <table>
+    <tr>
+      <td>{{'viewer.origin'|translate}}</td>
+    </tr>
+    <tr>
+      <td>
+        <mat-form-field appearance="fill">
+          <mat-label>{{'viewer.lat'|translate}}</mat-label>
+          <input matInput type="number" formControlName="latitude" id="latitude" step="0.0001" >
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field appearance="fill">
+          <mat-label>{{'viewer.lon'|translate}}</mat-label>
+          <input matInput type="number" formControlName="longitude" id="longitude" step="0.0001" >
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr>
+      <td>{{'viewer.map_coord'|translate}}</td>
+    </tr>
+
+    <tr>
+      <td>
+        <mat-form-field appearance="fill">
+          <mat-label>{{'viewer.lat'|translate}}</mat-label>
+          <input matInput type="number" formControlName="mapLatitude" id="mapLatitude" step="0.0001" >
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field appearance="fill">
+          <mat-label>{{'viewer.lon'|translate}}</mat-label>
+          <input matInput type="number" formControlName="mapLongitude" id="mapLongitude" step="0.0001" >
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field appearance="fill">
+          <mat-label>{{'viewer.angle_xyz'|translate}}</mat-label>
+          <input matInput type="number" formControlName="angle" id="angle">
+        </mat-form-field>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <mat-form-field appearance="fill">
+          <mat-label> {{'viewer.map_angle'|translate}}</mat-label>
+          <input matInput type="number" formControlName="mapAngle" id="mapAngle">
+        </mat-form-field>
+      </td>
+
+      <td>
+        <mat-form-field appearance="fill">
+          <mat-label> {{'viewer.zoom'|translate}}</mat-label>
+          <input matInput type="number" formControlName="zoom" id="zoom">
+        </mat-form-field>
+      </td>
+      <td>
+        <span>{{'viewer.show_zoom'|translate}} </span>
+        <mat-checkbox formControlName="zoomEnabled" id="zoomEnabled" (change)="checkBoxEvents($event)"></mat-checkbox>
+      </td>
+      <td>
+        <span>{{'viewer.enable_gesture'|translate}} </span>
+        <mat-checkbox formControlName="panEnabled" id="panEnabled" (change)="checkBoxEvents($event)"></mat-checkbox>
+      </td>
+    </tr>
+  </table>
+</form>
+
+<mat-dialog-actions>
+  <span class="origin-spacer"></span>
+  <button mat-flat-button color="warn" mat-dialog-close="false">{{'viewer.close'|translate}}</button>
+</mat-dialog-actions>

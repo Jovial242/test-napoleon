@@ -1,0 +1,36 @@
+.margin-project-img {
+  max-height: 250px;
+}
+
+img.size-project-img {
+  margin-top: 1%;
+  max-width: 350px;
+  max-height: 190px;
+}
+
+.btn-actions {
+  margin-top: -20%;
+}
+.mat-form-field-flex {
+  background-color: rgba($color: #fff, $alpha: 0.7);
+}
+mat-grid-list table .north-full-width,
+.south-full-width {
+  margin-left: 50%;
+}
+
+// mat-grid-list table .west-full-width {
+//   // margin-left: 8%;
+// }
+
+mat-grid-list table .east-full-width {
+  margin-left: 20%;
+}
+
+.mat-toolbar-height {
+  height: 30px;
+}
+
+.origin-spacer {
+  flex: 1 1 auto;
+}

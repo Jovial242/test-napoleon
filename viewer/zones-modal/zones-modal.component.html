@@ -1,0 +1,108 @@
+<p>
+  <mat-toolbar class="mat-toolbar-height">
+    <span>{{'viewer.zones'|translate}}</span>
+    <span class="zone-spacer"></span>
+    <button mat-icon-button mat-dialog-close="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+</p>
+
+<mat-grid-list [cols]="2" rowHeight="4rem">
+  <mat-grid-tile>
+    <button mat-mini-fab color="fill" (click)="createZone()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="">
+      <mat-label>{{'datatable.search'|translate}}</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. zone 1" #input>
+    </mat-form-field>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<div class="mat-elevation-z8">
+  <form [formGroup]="zoneForm">
+    <table mat-table [dataSource]="dataSource">
+
+      <!-- checked field Column -->
+      <ng-container matColumnDef="display">
+        <th mat-header-cell *matHeaderCellDef> {{'datatable.display'|translate}} <mat-checkbox type="checkbox"
+            [checked]="enableAllzones" (change)="showAllZones($event)">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let zone">
+          <mat-checkbox type="checkbox" [checked]="zone.visible" (change)="showZone($event,zone)"></mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> {{'datatable.name'|translate}} </th>
+        <td mat-cell *matCellDef="let zone">
+          <span *ngIf="zoneId!=zone.id">{{zone.name}}</span>
+          <mat-form-field appearance="outline" *ngIf="isModifyZone && zoneId==zone.id" class="zone-input">
+            <mat-label>{{'viewer.modify_zone_name'|translate}}</mat-label>
+            <input matInput type="text" formControlName="name">
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <!-- color Column -->
+      <ng-container matColumnDef="color">
+        <th mat-header-cell *matHeaderCellDef> {{'datatable.color'|translate}} </th>
+        <td mat-cell *matCellDef="let zone">
+          <span *ngIf="zoneId!=zone.id">{{zone.color}}</span>
+          <mat-form-field appearance="outline" *ngIf="isModifyZone && zoneId==zone.id" class="zone-input">
+            <mat-label>{{'viewer.modify_zone_color'|translate}}</mat-label>
+            <mat-select formControlName="color">
+              <mat-option [value]="color.value" *ngFor="let color of colors">{{color.title}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <!-- opacity Column -->
+      <ng-container matColumnDef="opacity">
+        <th mat-header-cell *matHeaderCellDef> {{'datatable.alpha'|translate}} </th>
+        <td mat-cell *matCellDef="let zone">
+          <span *ngIf="zoneId!=zone.id">{{zone.alpha}}</span>
+          <mat-form-field appearance="outline" *ngIf="isModifyZone && zoneId==zone.id" class="zone-input">
+            <mat-label>{{'viewer.modify_zone_opacity'|translate}}</mat-label>
+            <input matInput type="number" formControlName="opacity">
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> {{'datatable.actions'|translate}} </th>
+        <td mat-cell *matCellDef="let zone;let index=index">
+          <button mat-icon-button mat-button class="save-btn" *ngIf="zoneId==zone.id" (click)="setChangesofZone(zone)">
+            <mat-icon>
+              <span> update </span>
+            </mat-icon>
+          </button>
+          <button mat-icon-button mat-button class="edit-btn" *ngIf="zoneId!=zone.id" (click)="modifyZone(zone)">
+            <mat-icon>
+              <span> edit </span>
+            </mat-icon>
+          </button>
+          <button mat-icon-button mat-button color="accent" (click)="deleteZone(zone)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </form>
+</div>
+
+<mat-dialog-actions>
+  <span class="zone-spacer"></span>
+  <button mat-flat-button color="warn" mat-dialog-close="false">{{'viewer.close'|translate}}</button>
+</mat-dialog-actions>

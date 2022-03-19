@@ -1,0 +1,43 @@
+<div class="viewer-google-map {{playMode}}">
+  <google-map [width]="null" [height]="null" [options]="mapOptions">
+  </google-map>
+
+  <mat-card class="attachment-popup" cdkDrag *ngIf="showLastAttachment">
+
+
+    <mat-card-header class="popup-title">
+      <mat-card-title class="last-picture-title">{{'viewer.last_picture'|translate}}
+        <button mat-icon-button id="close-btn" (click)="cameraBtn()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-card-title>
+    </mat-card-header>
+    <img mat-card-image [src]="lastAttachment.url">
+    <div class="recognition-title">
+      <h3>{{'viewer.recognitions'|translate}}</h3>
+      <mat-form-field appearance="none" class="select-tracker">
+        <mat-label>{{'trackers.title'|translate}}</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let prediction of pAttachments" [value]="prediction.tracker"
+            (click)="loadPredictions(prediction.tracker)">
+            {{prediction.trackerName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-card-content class="prediction-color">
+      <span *ngFor="let item of lastPredictions">{{item.tagName}}: {{item.probability}}% <br></span>
+    </mat-card-content>
+  </mat-card>
+  <div class="viewer-button">
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+      <mat-button-toggle (click)="traceUnitModal()">{{'viewer.unit_trace'|translate}}</mat-button-toggle>
+      <mat-button-toggle (click)="zoneModal()">{{'viewer.zones'|translate}}</mat-button-toggle>
+      <mat-button-toggle (click)="originModal()">{{'viewer.origin'|translate}}</mat-button-toggle>
+      <mat-button-toggle (click)="centerBtn()">{{'viewer.center'|translate}}</mat-button-toggle>
+      <mat-button-toggle (click)="cameraBtn()">{{'viewer.camera'|translate}}</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+</div>
+<app-player [playerValue]="playerValue" (onPlayerChanged)="onPlayerChanged($event)" class="{{playMode}}"></app-player>

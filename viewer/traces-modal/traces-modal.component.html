@@ -1,0 +1,72 @@
+<p>
+  <mat-toolbar class="mat-toolbar-height">
+    <span>{{'datatable.trace'|translate}}</span>
+    <span class="trace-spacer"></span>
+    <button mat-icon-button mat-dialog-close="false">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+</p>
+
+<mat-form-field appearance="" class="filter">
+  <mat-label>{{'datatable.search'|translate}}</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Tracker 1" #input>
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <!-- name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'datatable.id'|translate}} </th>
+      <td mat-cell *matCellDef="let tracker"> {{tracker.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="show">
+      <th mat-header-cell *matHeaderCellDef> {{'datatable.visible'|translate}}
+        <mat-checkbox type="checkbox" [checked]="show" (change)="showAll($event,'show')"></mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let tracker">
+        <mat-checkbox type="checkbox" [checked]="tracker.show" (change)="showTrackers($event,tracker.id,'show')">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- collider Column -->
+    <ng-container matColumnDef="collider">
+      <th mat-header-cell *matHeaderCellDef> {{'datatable.collider'|translate}}
+        <mat-checkbox type="checkbox" [checked]="showCollider" (change)="showAll($event,'showCollider')"></mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let tracker">
+        <mat-checkbox type="checkbox" [checked]="tracker.showCollider" (change)="showTrackers($event,tracker.id,'showCollider')"></mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- trace Column -->
+    <ng-container matColumnDef="trace">
+      <th mat-header-cell *matHeaderCellDef> {{'datatable.trace'|translate}}
+        <mat-checkbox type="checkbox" [checked]="trace" (change)="showAll($event,'trace')"></mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let tracker">
+        <mat-checkbox type="checkbox" [checked]="tracker.trace" (change)="showTrackers($event,tracker.id,'trace')"></mat-checkbox>
+        <mat-form-field appearance="outline">
+          <mat-label>{{'datatable.color'|translate}}</mat-label>
+          <mat-select [(value)]="tracker.color">
+            <mat-option *ngFor="let color of listColor" [value]="color.value">
+              {{color.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+
+<mat-dialog-actions>
+  <span class="trace-spacer"></span>
+  <button mat-flat-button color="warn" mat-dialog-close="false">{{'viewer.close'|translate}}</button>
+</mat-dialog-actions>

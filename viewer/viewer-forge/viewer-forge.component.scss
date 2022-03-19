@@ -1,0 +1,27 @@
+.viewer {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  bottom: 120px;
+  right: 0;
+  &.realtime {
+    bottom: 70px;
+  }
+}
+.zones-btn-icon {
+  background: url("/assets/img/viewer/zone-sign.svg");
+}
+
+app-player {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right:0;
+  height: 120px;
+  &.realtime{
+    height: 70px;
+  }
+  &#record {
+    height: 50px;
+  }
+}
